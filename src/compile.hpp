@@ -40,6 +40,8 @@ void startCompile() {
     _initializeCompilation();
 
     std::filesystem::path absolute_path = std::filesystem::absolute(_input_path);
+    // Set current working directory to the parent folder of input file
+    std::filesystem::current_path(absolute_path.parent_path());
     _input_path = absolute_path.generic_string();
 
     Files::addFile(_input_path);

@@ -10,4 +10,5 @@ _start:() {
     rodata val i16 0xb800;
     asm.mov('ax', val);
     std.print(hello_world);
+    ret;
 }

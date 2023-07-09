@@ -1,3 +1,7 @@
+link 'bad';
+
 something:() {
-    stack i i8 0;
+    stack myint i16 0;
+    satck mychar i8 `c`;
+    ret;
 }

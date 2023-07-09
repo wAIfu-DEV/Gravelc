@@ -31,8 +31,8 @@ std::string __macro_to_str(const char* x) {return std::string(x);}
 #include "help.hpp"
 #include "gravel/Token.hpp"
 #include "gravel/rules.hpp"
-#include "gravel/preprocessor.hpp"
 #include "gravel/lexer.hpp"
+#include "gravel/preprocessor.hpp"
 #include "compile.hpp"
 #include "flow.hpp"
 
