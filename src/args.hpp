@@ -59,10 +59,6 @@ void _pushArgAndVal(std::string argtype, char* next) {
 void _matchArg(char* arg, char* next) {
     std::string s = arg;
 
-    if (!_isArgType(arg)) {
-        // TODO: Error msg + bail
-    }
-
     if (s == ARG_TYPE::HELP) {
         _setMainArg(ARG_TYPE::HELP);
         _pushArg(ARG_TYPE::HELP);
@@ -89,9 +85,12 @@ void _matchArg(char* arg, char* next) {
 }
 
 std::string handleArgs(int size, char** args) {
+    IO::print("args: ");
     for(int i = 0; i<size; ++i) {
+        IO::print(s(args[i]) + " ");
         _matchArg(args[i], (i+1<size) ? args[i+1] : nullptr);
     }
+    IO::print("\n");
     // If no main argument has been passed, default to help
     if (main_arg == "") main_arg = "-h";
     return main_arg;

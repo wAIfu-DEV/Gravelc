@@ -11,6 +11,7 @@
 namespace Gvc {
 namespace GravelPreProcessor {
 
+std::string input_file_path = "";
 bool has_errored = false;
 
 void _preprocess(const std::string& path) {
@@ -52,13 +53,31 @@ void _preprocess(const std::string& path) {
 
         // Including file
         if (s.find(".") != std::string::npos) {
+            std::filesystem::path in_path = input_file_path;
+            std::filesystem::current_path(in_path.parent_path());
             std::string abs_path = std::filesystem::absolute(s).generic_string();
             Files::addFile(abs_path);
             GravelLexer::startLexing(abs_path);
             _preprocess(abs_path);
         } 
         else { // Including library
-            IO::log("TODO: include library\n");
+            std::filesystem::current_path(Status::exe);
+            if (s.find(":") != std::string::npos) {
+                std::string lib = s.substr(0, s.find(':'));
+                std::string sublib = s.substr(s.find(':') + 1);
+                std::string libpath = "lib/" + s + "/" + sublib + ".gv";
+                std::string abs_path = std::filesystem::absolute(libpath).generic_string();
+                Files::addFile(abs_path);
+                GravelLexer::startLexing(abs_path);
+                _preprocess(abs_path);
+            } else {
+                std::string libpath = "lib/" + s + "/" + s + ".gv";
+                std::string abs_path = std::filesystem::absolute(libpath).generic_string();
+                Files::addFile(abs_path);
+                GravelLexer::startLexing(abs_path);
+                _preprocess(abs_path);
+            }
+            IO::log(s("linking to library ") + s + "\n");
         }
     }
 
@@ -68,6 +87,7 @@ void _preprocess(const std::string& path) {
 }
 
 void startPreprocess(const std::string& path) {
+    input_file_path = path;
     _preprocess(path);
 }
 

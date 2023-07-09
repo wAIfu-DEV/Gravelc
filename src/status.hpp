@@ -5,6 +5,8 @@ namespace Gvc {
 namespace Status {
 
 bool verbose_mode = false;
+std::string cwd = "";
+std::string exe = "";
 
 } // namespace Status
 } // namespace Gvc

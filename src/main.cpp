@@ -37,6 +37,10 @@ std::string __macro_to_str(const char* x) {return std::string(x);}
 #include "flow.hpp"
 
 int main(int argc, char **argv) {
+    Gvc::Status::cwd = std::filesystem::current_path().generic_string();
+    std::filesystem::path exe_path = argv[0];
+    Gvc::Status::exe = exe_path.parent_path().generic_string();
+
     std::string main_arg = Gvc::Arguments::handleArgs(argc, argv);
     Gvc::Flow::branch(main_arg);
 

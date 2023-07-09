@@ -1,7 +1,7 @@
 @ECHO OFF
 
 SET ROOT_PATH=%cd%
-SET DIST_WIN="dist/x86_64-win32"
+SET DIST_WIN="dist/x86_64-win32-gvc"
 
 SET /p GVC_ARGS=Enter Gravelc arguments: 
 
