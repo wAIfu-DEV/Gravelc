@@ -1,0 +1,3 @@
+something:() {
+    stack i i8 0;
+}

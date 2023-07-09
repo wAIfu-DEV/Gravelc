@@ -1,0 +1,13 @@
+section Program;
+link 'std';
+link 'asm';
+
+link 'link.gv';
+
+rodata hello_world i8* 'Hello, World!\n';
+
+_start:() {
+    rodata val i16 0xb800;
+    asm.mov('ax', val);
+    std.print(hello_world);
+}
