@@ -1,0 +1,14 @@
+type byte 1;
+type word 2;
+type dword 4;
+type qword 8;
+
+type i8 1;
+type i16 2;
+type i32 4;
+type i64 8;
+
+type u8 1;
+type u16 2;
+type u32 4;
+type u64 8;

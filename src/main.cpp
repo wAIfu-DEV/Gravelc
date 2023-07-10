@@ -1,16 +1,24 @@
 #ifndef _GVC_
 #define _GVC_
 
-#ifdef _WIN32
-    #define GVC_ARCH "x86_64-win32"
+#ifdef _WIN64
+    #define GVC_ARCH "x86_64-win64"
+#elif _WIN32
+    #define GVC_ARCH "x86_32-win32"
 #elif __linux__
-    #define GVC_ARCH "x86_64-elf64"
+    #if __x86_64__
+        #define GVC_ARCH "x86_64-linux"
+    #else
+        #define GVC_ARCH "x86_32-linux"
+    #endif
+#else
+    #define GVC_ARCH "unknown"
 #endif
 
 #define GVC_VERS_CYCLE "dev"
 #define GVC_VERS_MAJOR "1"
 #define GVC_VERS_MINOR "0"
-#define GVC_VERS_REVIS "0"
+#define GVC_VERS_REVIS "1"
 #define GVC_VERSION \
         GVC_ARCH " - " \
         GVC_VERS_CYCLE " " \

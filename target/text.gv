@@ -1,14 +1,22 @@
-section Program;
+// link directives
 link 'std';
 link 'asm';
 
+// section (similar to namespace)
+section Program {
+
 link 'link.gv';
 
+// read only variable
 rodata hello_world i8* 'Hello, World!\n';
+rodata comment_test i8* 'Hello, //World!\n';
 
+// entry point
 _start:() {
     rodata val i16 0xb800;
     asm.mov('ax', val);
     std.print(hello_world);
     ret;
 }
+
+} // section Program

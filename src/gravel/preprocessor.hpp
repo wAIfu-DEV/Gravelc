@@ -59,13 +59,14 @@ void _preprocess(const std::string& path) {
             Files::addFile(abs_path);
             GravelLexer::startLexing(abs_path);
             _preprocess(abs_path);
+            IO::log(s("linked to file ") + s + "\n");
         } 
         else { // Including library
             std::filesystem::current_path(Status::exe);
             if (s.find(":") != std::string::npos) {
                 std::string lib = s.substr(0, s.find(':'));
                 std::string sublib = s.substr(s.find(':') + 1);
-                std::string libpath = "lib/" + s + "/" + sublib + ".gv";
+                std::string libpath = "lib/" + lib + "/" + sublib + ".gv";
                 std::string abs_path = std::filesystem::absolute(libpath).generic_string();
                 Files::addFile(abs_path);
                 GravelLexer::startLexing(abs_path);
@@ -77,7 +78,7 @@ void _preprocess(const std::string& path) {
                 GravelLexer::startLexing(abs_path);
                 _preprocess(abs_path);
             }
-            IO::log(s("linking to library ") + s + "\n");
+            IO::log(s("linked to library ") + s + "\n");
         }
     }
 

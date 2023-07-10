@@ -15,6 +15,7 @@ enum LEX_MODE {
     STRING,
     CHAR,
     NUMBER,
+    COMMENT,
 };
 
 namespace LexerStatus {
@@ -37,7 +38,8 @@ bool isNotEOF() {
 }
 
 char peakNext() {
-    return LexerStatus::data->at(LexerStatus::char_index + 1);
+    if (LexerStatus::char_index >= LexerStatus::data->length()) return '\0';
+    return LexerStatus::data->at(LexerStatus::char_index);
 }
 
 char getNext() {
@@ -134,6 +136,15 @@ TOK_TYPE matchToken() {
     return TOK_TYPE::NONE;
 }
 
+void switchOnComment() {
+    if (LexerStatus::lexing_mode == LEX_MODE::STRING) {}
+    else if (LexerStatus::lexing_mode == LEX_MODE::CHAR) {}
+    else {
+        pushToken(matchToken());
+        LexerStatus::lexing_mode = LEX_MODE::COMMENT;
+    }
+}
+
 void switchOnCharQuote() {
     if (LexerStatus::lexing_mode == LEX_MODE::CHAR) {
         pushToken(TOK_TYPE::CHAR);
@@ -158,6 +169,11 @@ void switchOnStringQuote() {
         pushToken(matchToken());
         LexerStatus::lexing_mode = LEX_MODE::STRING;
     }  
+}
+
+bool isComment(char c) {
+    if (LexerStatus::escape_next) return false;
+    return (c == '/' && peakNext() == '/');
 }
 
 bool isCharQuote(char c) {
@@ -209,6 +225,19 @@ void _lex(const std::string& file_path, std::string* content_ptr) {
 
     while(isNotEOF()) {
         char c = getNext();
+
+        if (isComment(c) && (
+            LexerStatus::lexing_mode != LEX_MODE::STRING &&
+            LexerStatus::lexing_mode != LEX_MODE::CHAR
+        )) {
+            switchOnComment();
+            continue;
+        }
+
+        if (LexerStatus::lexing_mode == LEX_MODE::COMMENT) {
+            if (c == '\n') LexerStatus::lexing_mode = LEX_MODE::DEFAULT;
+            continue;
+        }
 
         if (isCharQuote(c)) {
             switchOnCharQuote();

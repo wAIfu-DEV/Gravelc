@@ -20,18 +20,18 @@ enum TOK_TYPE {
     COMMA = 10,
     SEMI_COLON = 11,
     /* multiple char */
-    STRING = 12,
-    CHAR = 13,
-    NUMBER = 14,
-    HEX_NUMBER = 15,
-    NAME = 16,
+    STRING = 100,
+    CHAR = 101,
+    NUMBER = 102,
+    HEX_NUMBER = 103,
+    NAME = 104,
     /* reserved names */
-    KEYW_READONLY = 17,
-    KEYW_STACK = 18,
-    KEYW_HEAP = 19,
-    KEYW_LINK = 20,
-    KEYW_SECTION = 21,
-    KEYW_RET = 22,
+    KEYW_READONLY = 200,
+    KEYW_STACK = 201,
+    KEYW_HEAP = 202,
+    KEYW_LINK = 203,
+    KEYW_SECTION = 204,
+    KEYW_RET = 205,
 };
 
 struct Token {

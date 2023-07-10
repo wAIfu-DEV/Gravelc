@@ -1,12 +1,6 @@
 #ifndef _GVC_H_COMPILE_
 #define _GVC_H_COMPILE_
 
-#ifdef _WIN32
-    #define GVC_FILE_EXTENSION "x86_64-win32"
-#elif __linux__
-    #define GVC_FILE_EXTENSION "x86_64-elf64"
-#endif
-
 #include "args.hpp"
 #include "IO.hpp"
 #include "files.hpp"
