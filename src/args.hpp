@@ -23,14 +23,27 @@ namespace ARG_TYPE {
 std::string main_arg = "";
 std::map<std::string, std::string> ArgumentsMap = {};
 
+/**
+ * @brief Checks if passed argument starts with '-'
+ * 
+ * @param arg passed argument
+ * @return true if contains '-'
+ * @return false if not
+ */
 bool _isArgType(std::string arg) {
     if (arg.length() < 2) return false;
     if (arg[0]!='\0' && arg[1]!='\0') {
-        if (arg[0]=='-') return true;
+        if (arg[0]==NAMED_ARG_PREFIX) return true;
     }
     return false;
 }
 
+/**
+ * @brief Sets the main argument deciding which branch gvc will take.
+ * If main arg has already been set, will error.
+ * 
+ * @param arg from ARG_TYPE
+ */
 void _setMainArg(std::string arg) {
     if (main_arg == "") {
         main_arg = arg;
@@ -40,10 +53,21 @@ void _setMainArg(std::string arg) {
     }
 }
 
+/**
+ * @brief Pushes an argument (without value) to ArgumentsMap
+ * 
+ * @param arg from ARG_TYPE
+ */
 void _pushArg(std::string arg) {
     ArgumentsMap.insert_or_assign(arg, "");
 }
 
+/**
+ * @brief Pushes argument + following value to ArgumentsMap
+ * 
+ * @param argtype from ARG_TYPE
+ * @param next errors if nullptr
+ */
 void _pushArgAndVal(std::string argtype, char* next) {
     if (next == nullptr) {
         IO::errCritical(
@@ -56,6 +80,12 @@ void _pushArgAndVal(std::string argtype, char* next) {
     ArgumentsMap.insert_or_assign(argtype, std::string(next));
 }
 
+/**
+ * @brief Tries to match the passed argument with availaible argument types.
+ * 
+ * @param arg passed argument
+ * @param next next passed argument, must be nullptr if no next exists
+ */
 void _matchArg(char* arg, char* next) {
     std::string s = arg;
 
@@ -85,12 +115,9 @@ void _matchArg(char* arg, char* next) {
 }
 
 std::string handleArgs(int size, char** args) {
-    IO::print("args: ");
     for(int i = 0; i<size; ++i) {
-        IO::print(s(args[i]) + " ");
         _matchArg(args[i], (i+1<size) ? args[i+1] : nullptr);
     }
-    IO::print("\n");
     // If no main argument has been passed, default to help
     if (main_arg == "") main_arg = "-h";
     return main_arg;

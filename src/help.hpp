@@ -6,6 +6,9 @@
 namespace Gvc {
 namespace Help {
 
+/**
+ * @brief Shows a list of available arguments for gvc
+ */
 void displayHelp() {
     constexpr
     int64_t _HELPLINES_SIZE = 10;

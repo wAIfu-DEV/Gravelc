@@ -12,6 +12,11 @@
 namespace Gvc {
 namespace Flow {
 
+/**
+ * @brief Changes the path of execution based on the main argument.
+ * 
+ * @param main_arg 
+ */
 void branch(std::string main_arg) {
     if (main_arg == Arguments::ARG_TYPE::VERSION) {
         IO::log("branch: version\n");

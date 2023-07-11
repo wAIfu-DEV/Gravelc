@@ -1,34 +1,65 @@
 #ifndef _GVC_H_RULES_
 #define _GVC_H_RULES_
 
+#include <vector>
+
 #include "Token.hpp"
+#include "AstNode.hpp"
 
 namespace Gvc {
-namespace GravelRules
-{
+namespace GravelRules {
 
-typedef std::vector<std::pair<std::string, enum TOK_TYPE>> TokenMatchLookup;
+typedef std::pair<const char*, Token::TOK_TYPE> TokenMatch;
 
-TokenMatchLookup tok_lookup_table = {
+constexpr
+size_t TOK_LOOKUP_TABLE_SIZE = 17;
+
+typedef Token::TOK_TYPE TT;
+
+constexpr
+TokenMatch tok_lookup_table[TOK_LOOKUP_TABLE_SIZE] {
     /* single char tokens */
-    {"*", TOK_TYPE::POINTER},
-    {":", TOK_TYPE::COLON},
-    {"(", TOK_TYPE::PARENTHESIS_OPEN},
-    {")", TOK_TYPE::PARENTHESIS_CLOSE},
-    {"{", TOK_TYPE::BRACE_OPEN},
-    {"}", TOK_TYPE::BRACE_CLOSE},
-    {"[", TOK_TYPE::BRACKET_OPEN},
-    {"]", TOK_TYPE::BRACKET_CLOSE},
-    {".", TOK_TYPE::DOT},
-    {",", TOK_TYPE::COMMA},
-    {";", TOK_TYPE::SEMI_COLON},
+    {"*", TT::POINTER},
+    {":", TT::COLON},
+    {"(", TT::PARENTHESIS_OPEN},
+    {")", TT::PARENTHESIS_CLOSE},
+    {"{", TT::BRACE_OPEN},
+    {"}", TT::BRACE_CLOSE},
+    {"[", TT::BRACKET_OPEN},
+    {"]", TT::BRACKET_CLOSE},
+    {".", TT::DOT},
+    {",", TT::COMMA},
+    {";", TT::SEMI_COLON},
     /* reserved word */
-    {"rodata", TOK_TYPE::KEYW_READONLY},
-    {"stack", TOK_TYPE::KEYW_STACK},
-    {"heap", TOK_TYPE::KEYW_HEAP},
-    {"link", TOK_TYPE::KEYW_LINK},
-    {"section", TOK_TYPE::KEYW_SECTION},
-    {"ret", TOK_TYPE::KEYW_RET}
+    {"rodata", TT::KEYW_READONLY},
+    {"stack", TT::KEYW_STACK},
+    {"heap", TT::KEYW_HEAP},
+    {"link", TT::KEYW_LINK},
+    {"section", TT::KEYW_SECTION},
+    {"ret", TT::KEYW_RET}
+};
+
+typedef Ast::AST_TYPE AT;
+
+struct AstPatternNode {
+    AT type = AT::NONE;
+    AT dest = AT::NONE;
+    bool discard = false;
+};
+
+struct PatternEntry {
+    AT type;
+    AstPatternNode patterns[16];
+};
+
+constexpr
+size_t AST_PATTERNS_SIZE = 3;
+
+constexpr
+PatternEntry ast_patterns[AST_PATTERNS_SIZE] {
+    {AT::EXPRESSION, {{AT::STRING, AT::BODY, false}}},
+    {AT::EXPRESSION, {{AT::NUMBER, AT::BODY, false}}},
+    {AT::EXPRESSION, {{AT::HEX_NUMBER, AT::BODY, false}}},
 };
 
 } // namespace GravelRules

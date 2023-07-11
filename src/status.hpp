@@ -6,7 +6,7 @@ namespace Status {
 
 bool verbose_mode = false;
 std::string cwd = "";
-std::string exe = "";
+std::string exe_directory = "";
 
 } // namespace Status
 } // namespace Gvc

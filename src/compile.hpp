@@ -13,6 +13,10 @@ namespace Compiler {
 std::string _input_path = "";
 std::string _output_path = "";
 
+/**
+ * @brief Checks for compilation requirements, will be expanded in the future.
+ * 
+ */
 void _initializeCompilation() {
     auto iter = Arguments::ArgumentsMap.find(Arguments::ARG_TYPE::OUT_PATH);
     // Found
@@ -30,6 +34,10 @@ void _initializeCompilation() {
     IO::log("passed requirements check.\n");
 }
 
+/**
+ * @brief Start the compilation process using the input path as starting point.
+ * 
+ */
 void startCompile() {
     _initializeCompilation();
 

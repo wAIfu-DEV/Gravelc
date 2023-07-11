@@ -20,16 +20,16 @@
 #define GVC_VERS_MINOR "0"
 #define GVC_VERS_REVIS "1"
 #define GVC_VERSION \
-        GVC_ARCH " - " \
-        GVC_VERS_CYCLE " " \
-        GVC_VERS_MAJOR "." \
-        GVC_VERS_MINOR "." \
-        GVC_VERS_REVIS
+            GVC_ARCH " - " \
+            GVC_VERS_CYCLE " " \
+            GVC_VERS_MAJOR "." \
+            GVC_VERS_MINOR "." \
+            GVC_VERS_REVIS
 
 #include <iostream>
 #include <cstdint>
 
-std::string __macro_to_str(const char* x) {return std::string(x);}
+constexpr std::string __macro_to_str(const char* x) {return std::string(x);}
 #define s(x) __macro_to_str(x)
 
 #include "status.hpp"
@@ -38,6 +38,7 @@ std::string __macro_to_str(const char* x) {return std::string(x);}
 #include "args.hpp"
 #include "help.hpp"
 #include "gravel/Token.hpp"
+#include "gravel/AstNode.hpp"
 #include "gravel/rules.hpp"
 #include "gravel/lexer.hpp"
 #include "gravel/preprocessor.hpp"
@@ -47,7 +48,7 @@ std::string __macro_to_str(const char* x) {return std::string(x);}
 int main(int argc, char **argv) {
     Gvc::Status::cwd = std::filesystem::current_path().generic_string();
     std::filesystem::path exe_path = argv[0];
-    Gvc::Status::exe = exe_path.parent_path().generic_string();
+    Gvc::Status::exe_directory = exe_path.parent_path().generic_string();
 
     std::string main_arg = Gvc::Arguments::handleArgs(argc, argv);
     Gvc::Flow::branch(main_arg);

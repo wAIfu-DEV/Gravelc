@@ -4,6 +4,7 @@
 #include <iostream>
 
 namespace Gvc {
+namespace Token {
 
 enum TOK_TYPE {
     NONE = 0,
@@ -34,13 +35,14 @@ enum TOK_TYPE {
     KEYW_RET = 205,
 };
 
-struct Token {
+struct Tok {
     std::string content = "";
     enum TOK_TYPE type = TOK_TYPE::NONE;
     uint16_t line = 1;
     uint16_t col = 1;
 };
 
+}
 } // namespace Gvc
 
 

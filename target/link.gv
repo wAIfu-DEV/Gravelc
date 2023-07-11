@@ -1,4 +1,4 @@
-link 'std:io';
+link 'std';
 
 something:() {
     stack myint i16 0;

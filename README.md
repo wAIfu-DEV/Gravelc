@@ -4,7 +4,7 @@ Gravel is a language that aims to sit between assembly and C.
 
 WIP:
 - [x] Compiler arguments handling
-- [ ] (WIP) Lexer
+- [x] Lexer
 - [ ] (WIP) Preprocessor
 - [ ] Parser
 - [ ] LLVM frontend / ASM transpiler ?
